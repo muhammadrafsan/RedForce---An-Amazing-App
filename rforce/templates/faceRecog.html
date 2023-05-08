@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+  <head>
+    <title>Face Verification | Red Force</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" >
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'faceRecog.css' %}">
+  
+  </head>
+  <body>
+    <section>
+      <div style="background-color: gainsboro;">
+        {% if user.is_authenticated %}
+          <div class="container d-flex justify-content-between p-2">
+            <a class="navbar-brand" href="#">
+              <img src="{% static 'images/RedForce_transparent.png' %}" width="70px" height="55px" alt="" class="d-inline-block align-text-top">
+            </a>
+            <div class="d-grid gap-2 d-md-flex">
+              
+              <div class="topbar d-md-flex">
+                <a class="text-light" href="{% url 'rfl:logout' %}" style="text-decoration: none;"><p>Logout</p></a>
+              </div>  
+            </div>
+          </div>
+        <!---->
+    </section>
+    <section>
+        <div class="banner" style="padding: 0px 0px;">
+            <br>
+            <h3>Face Verification</h3>
+            <p><strong>Please turn on your webcam</strong> </p>
+            <div>
+              <button class="btn-primary" id="start-camera">Open Camera</button>
+            </div>
+            <div>
+              <video id="video" width="320" height="240" autoplay></video>
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="img_data" value="" id="js_data_input"/>
+                <input type="hidden" name="img_data2" value="" id="js_data_input2"/>
+                <input type="submit" id="click-photo" value="CLICK PHOTO"/>
+              </form>
+              <canvas id="canvas" width="320" height="240"></canvas>
+            </div>
+
+            
+        </div>
+        
+    </section>
+    <script>
+      
+      let camera_button = document.querySelector("#start-camera");
+      let video = document.querySelector("#video");
+      let click_button = document.querySelector("#click-photo");
+      let canvas = document.querySelector("#canvas");
+      click_button.style.display = 'none';
+      camera_button.addEventListener('click', async function() {
+          let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          video.srcObject = stream;
+          //open camera button is disabled upon clicking
+          camera_button.style.display = 'none';
+          click_button.style.display = 'initial';
+
+      });
+
+      click_button.addEventListener('click', function() {
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          let image_data_url = canvas.toDataURL('image/jpeg');
+
+      // data url of the image
+      console.log(image_data_url); 
+      // JPEG base64
+      let image_base64 = document.querySelector("#canvas").toDataURL('image/jpeg').replace(/^data:image\/jpeg;base64,/, "");
+      $('#js_data_input').val(image_base64);   
+      $('#js_data_input2').val(image_data_url);     
+      });
+
+      
+
+
+    </script>
+    {% else %}
+    <div class="warning" style="text-align: center;">
+      <img src="{% static 'images/warning sign.jpg' %}" alt="">
+      <h1>Permission denied!</h1>
+      <h4>You might not be logged in</h4>
+    </div>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

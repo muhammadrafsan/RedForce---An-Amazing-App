@@ -1,0 +1,75 @@
+* {
+  color: lightgray;
+  background: black;
+}
+
+.mid {
+  margin-top: 75px;
+}
+
+.box img {}
+
+.box {
+  text-align: center;
+  padding-top: 35px;
+}
+
+.box h1 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.box h1 span{
+  color: #D8413D;
+}
+.box h4{
+}
+.content {
+  height: 100vh;
+  opacity: .95;
+}
+.google {
+  margin: auto;
+  margin-top: 50px;
+  width: 25%;
+  padding: 60px 0px;
+  color: black;
+  border: 8px double #D8413D;
+}
+
+button p {
+  margin-bottom: 0;
+}
+
+.google h4 {
+  margin-bottom: 30px;
+  color: lightgray;
+}
+.google a {
+  margin: auto;
+  width: 50%;
+  background-color: lightgray;
+  padding: 7px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: black;
+  text-align: center;
+  border: none;
+  border: 1px solid #1c6cbb;
+  text-decoration: none;
+}
+.google a img{
+  text-decoration: none;
+  margin-right: 10px;
+  background: none;
+}
+
+.google a:hover {
+  background: #4F7CE0;
+  color: white;
+  transition: 0.4s;
+  cursor: pointer;
+  text-decoration: none;
+}

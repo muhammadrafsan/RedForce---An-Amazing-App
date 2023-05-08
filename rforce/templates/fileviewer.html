@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Files</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" >
+    
+    <link rel="stylesheet" href="{% static 'fileviewer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="top-content">
+          {% if user.is_authenticated %}
+          <div class="container d-flex justify-content-between p-2">
+            <!--<a class="navbar-brand" href="#">
+              <img src="{% static 'images/transparent_logo.png' %}" width="105px" height="50px" alt="" class="d-inline-block align-text-top">
+            </a>-->
+            <div class="d-grid gap-2 d-md-flex">
+              <div class="topbar d-md-flex">
+                <a class="text-light" href="{% url 'rfl:viewfile' %}"><p>Go Back</p></a>
+              </div>
+              <div class="topbar d-md-flex">
+                <a class="text-light" href="{% url 'rfl:logout' %}" style="padding-left: 20px;"><p>Logout</p></a>
+              </div>  
+            </div>
+          {% endif %}
+        </div>
+    </header>
+    <div class="content">
+      <div>
+          {% if object_list %}
+          {% for obj in object_list %}
+          {{obj}}
+          <br>
+          {% endfor %}
+          {% endif %}
+      </div>
+  </div>
+</body>
+</html>
